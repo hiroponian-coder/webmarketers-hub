@@ -2,9 +2,19 @@ import { getArticles, getCategories } from '@/lib/microcms';
 import ArticleCard from '@/components/ArticleCard';
 import Link from 'next/link';
 
-export default async function Home() {
-  const { contents: latestArticles } = await getArticles({ limit: 6 });
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}) {
+  const resolvedParams = await searchParams;
+  const currentPage = typeof resolvedParams.page === 'string' ? parseInt(resolvedParams.page, 10) : 1;
+  const limit = 6;
+  const offset = (currentPage - 1) * limit;
+
+  const { contents: latestArticles, totalCount } = await getArticles({ limit, offset });
   const { contents: categories } = await getCategories({ limit: 10 });
+  const totalPages = Math.ceil(totalCount / limit);
 
   return (
     <div className="min-h-screen bg-slate-50 pb-20">
@@ -43,6 +53,41 @@ export default async function Home() {
             <ArticleCard key={article.id} article={article} />
           ))}
         </div>
+
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <div className="flex justify-center items-center gap-4 mt-16">
+            {currentPage > 1 ? (
+              <Link
+                href={`/?page=${currentPage - 1}`}
+                className="px-6 py-3 bg-white border border-slate-200 text-slate-700 font-medium rounded-full hover:border-blue-500 hover:text-blue-600 transition-colors shadow-sm"
+              >
+                前のページ
+              </Link>
+            ) : (
+              <span className="px-6 py-3 bg-slate-50 border border-slate-100 text-slate-400 font-medium rounded-full cursor-not-allowed hidden md:inline-block">
+                前のページ
+              </span>
+            )}
+
+            <div className="text-slate-500 font-medium">
+              <span className="text-slate-900">{currentPage}</span> / {totalPages}
+            </div>
+
+            {currentPage < totalPages ? (
+              <Link
+                href={`/?page=${currentPage + 1}`}
+                className="px-6 py-3 bg-white border border-slate-200 text-slate-700 font-medium rounded-full hover:border-blue-500 hover:text-blue-600 transition-colors shadow-sm"
+              >
+                次のページ
+              </Link>
+            ) : (
+              <span className="px-6 py-3 bg-slate-50 border border-slate-100 text-slate-400 font-medium rounded-full cursor-not-allowed hidden md:inline-block">
+                次のページ
+              </span>
+            )}
+          </div>
+        )}
       </section>
     </div>
   );
