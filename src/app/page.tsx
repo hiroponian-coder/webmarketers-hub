@@ -1,5 +1,6 @@
 import { getArticles, getCategories } from '@/lib/microcms';
 import ArticleCard from '@/components/ArticleCard';
+import Sidebar from '@/components/Sidebar';
 import Link from 'next/link';
 
 export default async function Home({
@@ -40,54 +41,60 @@ export default async function Home({
       </section>
 
       {/* Latest Articles */}
-      <section className="container mx-auto px-6 max-w-5xl mt-16">
-        <div className="flex items-center justify-between mb-8">
-          <h2 className="text-2xl font-bold text-slate-800 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-blue-600 rounded-full inline-block"></span>
-            最新の記事
-          </h2>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {latestArticles.map(article => (
-            <ArticleCard key={article.id} article={article} />
-          ))}
-        </div>
-
-        {/* Pagination */}
-        {totalPages > 1 && (
-          <div className="flex justify-center items-center gap-4 mt-16">
-            {currentPage > 1 ? (
-              <Link
-                href={`/?page=${currentPage - 1}`}
-                className="px-6 py-3 bg-white border border-slate-200 text-slate-700 font-medium rounded-full hover:border-blue-500 hover:text-blue-600 transition-colors shadow-sm"
-              >
-                前のページ
-              </Link>
-            ) : (
-              <span className="px-6 py-3 bg-slate-50 border border-slate-100 text-slate-400 font-medium rounded-full cursor-not-allowed hidden md:inline-block">
-                前のページ
-              </span>
-            )}
-
-            <div className="text-slate-500 font-medium">
-              <span className="text-slate-900">{currentPage}</span> / {totalPages}
+      <section className="container mx-auto px-6 max-w-6xl mt-16">
+        <div className="flex flex-col lg:flex-row gap-10">
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center justify-between mb-8">
+              <h2 className="text-2xl font-bold text-slate-800 flex items-center gap-2">
+                <span className="w-1.5 h-6 bg-blue-600 rounded-full inline-block"></span>
+                最新の記事
+              </h2>
             </div>
 
-            {currentPage < totalPages ? (
-              <Link
-                href={`/?page=${currentPage + 1}`}
-                className="px-6 py-3 bg-white border border-slate-200 text-slate-700 font-medium rounded-full hover:border-blue-500 hover:text-blue-600 transition-colors shadow-sm"
-              >
-                次のページ
-              </Link>
-            ) : (
-              <span className="px-6 py-3 bg-slate-50 border border-slate-100 text-slate-400 font-medium rounded-full cursor-not-allowed hidden md:inline-block">
-                次のページ
-              </span>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {latestArticles.map(article => (
+                <ArticleCard key={article.id} article={article} />
+              ))}
+            </div>
+
+            {/* Pagination */}
+            {totalPages > 1 && (
+              <div className="flex justify-center items-center gap-4 mt-16">
+                {currentPage > 1 ? (
+                  <Link
+                    href={`/?page=${currentPage - 1}`}
+                    className="px-6 py-3 bg-white border border-slate-200 text-slate-700 font-medium rounded-full hover:border-blue-500 hover:text-blue-600 transition-colors shadow-sm"
+                  >
+                    前のページ
+                  </Link>
+                ) : (
+                  <span className="px-6 py-3 bg-slate-50 border border-slate-100 text-slate-400 font-medium rounded-full cursor-not-allowed hidden md:inline-block">
+                    前のページ
+                  </span>
+                )}
+
+                <div className="text-slate-500 font-medium">
+                  <span className="text-slate-900">{currentPage}</span> / {totalPages}
+                </div>
+
+                {currentPage < totalPages ? (
+                  <Link
+                    href={`/?page=${currentPage + 1}`}
+                    className="px-6 py-3 bg-white border border-slate-200 text-slate-700 font-medium rounded-full hover:border-blue-500 hover:text-blue-600 transition-colors shadow-sm"
+                  >
+                    次のページ
+                  </Link>
+                ) : (
+                  <span className="px-6 py-3 bg-slate-50 border border-slate-100 text-slate-400 font-medium rounded-full cursor-not-allowed hidden md:inline-block">
+                    次のページ
+                  </span>
+                )}
+              </div>
             )}
           </div>
-        )}
+
+          <Sidebar />
+        </div>
       </section>
     </div>
   );

@@ -46,6 +46,7 @@ export type Article = {
 export const getArticles = async (queries?: MicroCMSQueries) => {
     const listData = await client.getList<Article>({
         endpoint: 'articles',
+        customRequestInit: { cache: 'no-store' },
         queries,
     });
     return listData;
@@ -56,6 +57,7 @@ export const getArticleDetail = async (contentId: string, queries?: MicroCMSQuer
     const detailData = await client.getListDetail<Article>({
         endpoint: 'articles',
         contentId,
+        customRequestInit: { cache: 'no-store' },
         queries,
     });
     return detailData;
@@ -65,6 +67,7 @@ export const getArticleDetail = async (contentId: string, queries?: MicroCMSQuer
 export const getCategories = async (queries?: MicroCMSQueries) => {
     const listData = await client.getList<Category>({
         endpoint: 'categories',
+        customRequestInit: { cache: 'no-store' },
         queries,
     });
     return listData;
