@@ -5,13 +5,6 @@ import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import Sidebar from '@/components/Sidebar';
 
-export async function generateStaticParams() {
-    const { contents } = await getArticles({ limit: 100 });
-    return contents.map((article) => ({
-        id: article.id,
-    }));
-}
-
 export default async function ArticleDetail({ params }: { params: Promise<{ id: string }> }) {
     const resolvedParams = await params;
 
