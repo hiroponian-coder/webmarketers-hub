@@ -5,12 +5,20 @@ import { format } from 'date-fns';
 export default function ArticleCard({ article }: { article: Article }) {
     const formattedDate = format(new Date(article.publishedAt), 'yyyy.MM.dd');
 
+    const CATEGORY_IMAGES: Record<string, string> = {
+        'Webデザイン': 'https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=800&q=80',
+        'SEO対策': 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80',
+        'SNSマーケティング': 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=800&q=80',
+        'データ分析': 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80',
+    };
+    const fallbackImage = CATEGORY_IMAGES[article.category.name] || 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80';
+
     return (
         <Link href={`/articles/${article.id}`} className="group block bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all border border-slate-100 flex flex-col h-full">
             <div className="aspect-[16/9] relative overflow-hidden bg-slate-100 shrink-0">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                    src={article.thumbnail?.url || 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80'}
+                    src={article.thumbnail?.url || fallbackImage}
                     alt={article.title}
                     className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"
                 />
