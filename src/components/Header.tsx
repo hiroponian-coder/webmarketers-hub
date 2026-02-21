@@ -7,7 +7,7 @@ export default function Header() {
             <div className="container mx-auto px-6 h-16 flex items-center justify-between">
                 <Link href="/" className="font-bold text-xl text-blue-600 flex items-center gap-2">
                     <BookOpen className="w-6 h-6" />
-                    <span>WebMarketer's Hub</span>
+                    <span>WebMarketer&apos;s Hub</span>
                 </Link>
                 <nav className="hidden md:flex gap-8 text-sm font-medium text-slate-600">
                     <Link href="/" className="hover:text-blue-600 transition-colors">ホーム</Link>

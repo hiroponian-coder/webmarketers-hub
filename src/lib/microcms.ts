@@ -1,4 +1,4 @@
-import { createClient } from 'microcms-js-sdk';
+import { createClient, MicroCMSQueries } from 'microcms-js-sdk';
 
 // 環境変数が設定されていない場合はエラーをスロー
 if (!process.env.MICROCMS_SERVICE_DOMAIN) {
@@ -43,7 +43,7 @@ export type Article = {
 };
 
 // 記事一覧を取得する関数
-export const getArticles = async (queries?: any) => {
+export const getArticles = async (queries?: MicroCMSQueries) => {
     const listData = await client.getList<Article>({
         endpoint: 'articles',
         queries,
@@ -52,7 +52,7 @@ export const getArticles = async (queries?: any) => {
 };
 
 // 記事詳細を取得する関数
-export const getArticleDetail = async (contentId: string, queries?: any) => {
+export const getArticleDetail = async (contentId: string, queries?: MicroCMSQueries) => {
     const detailData = await client.getListDetail<Article>({
         endpoint: 'articles',
         contentId,
@@ -62,7 +62,7 @@ export const getArticleDetail = async (contentId: string, queries?: any) => {
 };
 
 // カテゴリー一覧を取得する関数
-export const getCategories = async (queries?: any) => {
+export const getCategories = async (queries?: MicroCMSQueries) => {
     const listData = await client.getList<Category>({
         endpoint: 'categories',
         queries,

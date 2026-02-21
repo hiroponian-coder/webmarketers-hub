@@ -19,7 +19,7 @@ export default async function ArticleDetail({ params }: { params: Promise<{ id: 
     let article;
     try {
         article = await getArticleDetail(resolvedParams.id);
-    } catch (err) {
+    } catch {
         notFound();
     }
 
