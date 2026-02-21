@@ -10,7 +10,7 @@ export default function ArticleCard({ article }: { article: Article }) {
             <div className="aspect-[16/9] relative overflow-hidden bg-slate-100 shrink-0">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                    src={article.thumbnail?.url || 'https://images.unsplash.com/photo-1432888117426-1d5ac0a2e379?auto=format&fit=crop&q=80&w=800'}
+                    src={article.thumbnail?.url || 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80'}
                     alt={article.title}
                     className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"
                 />
